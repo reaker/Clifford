@@ -1,8 +1,8 @@
 package App.Main2Map;
 
-import App.Interface.CacheItem;
-
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class CacheView implements App.Interface.CacheView {
     private int size;
@@ -15,25 +15,35 @@ public class CacheView implements App.Interface.CacheView {
 
     @Override
     public int size() {
-        return size; //max         // don't know if it should return actual or max size?
-        //return  map.size(); //actual
+        int count = 0;
+        for (Object o : map.entrySet()) {
+            count++;
+        }
+        return count;
     }
 
     @Override
-    public CacheItem getItem(int index) {
+    public App.Main2Map.CacheItem getItem(int index) {
+
+        if (index >= size() || index < 0) return null;  // if index is out of range -> return null
         App.Main2Map.CacheItem item = null;
 
-        if (index > size || index < 0) return null;  // if index is out of range -> return null
-
         // iterate through map until it reach indexed element (last element of loop)
-        for (int i = 0; i < index; i++) {
-            item = map.entrySet().iterator().next().getValue();
+        Iterator iter = map.entrySet().iterator();
+        for (int i = 0; i <= index; i++) {
+            if (iter.hasNext()) {
+                Map.Entry pair = (Map.Entry) iter.next();
+                if (pair != null)
+                    item = (App.Main2Map.CacheItem) pair.getValue();
+                else
+                    return null;
+            }
         }
         return item;
     }
 
     @Override
-    public CacheItem getItem(String key) {
+    public App.Main2Map.CacheItem getItem(String key) {
         if (!map.containsKey(key)) return null; // if map doesn't contain element, then return null
         return map.get(key);
     }

@@ -17,6 +17,15 @@ public class CacheItem implements App.Interface.CacheItem {
 
     @Override
     public Object getValue() {
+
         return object;
+    }
+
+    @Override
+    public String toString() {
+        return "CacheItem{" +
+                "key='" + key + '\'' +
+                ", object=" + object +
+                '}';
     }
 }

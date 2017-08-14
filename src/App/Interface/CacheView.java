@@ -7,4 +7,5 @@ public interface CacheView {
     CacheItem getItem(int index);//zwraca obiekt o podanym  indeksie
 
     CacheItem getItem(String key); //zwraca obiekt o podanym kluczu
+
 }

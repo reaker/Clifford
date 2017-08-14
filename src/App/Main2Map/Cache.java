@@ -1,8 +1,5 @@
 package App.Main2Map;
 
-import App.Interface.CacheItem;
-import App.Interface.CacheView;
-
 import java.util.LinkedHashMap;
 
 public class Cache implements App.Interface.Cache {
@@ -20,22 +17,28 @@ public class Cache implements App.Interface.Cache {
 
         App.Main2Map.CacheItem newCacheItem = new App.Main2Map.CacheItem(key, item);
 
-        //if Cache has got that element
-        if (map.containsKey(key)) {
-            newCacheItem=map.get(key);
-            map.remove(key); //delete because element might be in any position
-            map.put(key, newCacheItem); //and add the same element (it will be added in newest position)
-            return newCacheItem;
+        try {
+            //if Cache has got that element
+            if (map.containsKey(key)) {
+                newCacheItem = map.get(key);
+                map.remove(key); //delete because element might be in any position
+                map.put(key, newCacheItem); //and add the same element (it will be added in newest position)
+                return newCacheItem;
+            }
+
+            // if map doesn't contain this object then
+            // 1. check if after adding it the size will be to big (if yes -> delet oldest element)
+            // 2. add new element to Cache
+            else {
+                if ((map.size() + 1) > size) deleteOldestElement();
+                map.put(key, newCacheItem);
+                return newCacheItem;
+            }
+        } catch (NullPointerException exc) {
+            System.out.println("No such element");
+            return null;
         }
 
-        // if map doesn't contain this object then
-        // 1. check if after adding it the size will be to big (if yes -> delet oldest element)
-        // 2. add new element to Cache
-        else {
-            if ((map.size() + 1) > size) deleteOldestElement();
-            map.put(key, newCacheItem);
-            return newCacheItem;
-        }
     }
 
     private void deleteOldestElement() {
