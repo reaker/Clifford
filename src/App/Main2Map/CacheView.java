@@ -5,21 +5,16 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CacheView implements App.Interface.CacheView {
-    private int size;
+
     private LinkedHashMap<String, App.Main2Map.CacheItem> map = new LinkedHashMap<>();
 
-    CacheView(int size, LinkedHashMap<String, App.Main2Map.CacheItem> map) {
-        this.size = size;
+    CacheView(LinkedHashMap<String, App.Main2Map.CacheItem> map) {
         this.map = map;
     }
 
     @Override
     public int size() {
-        int count = 0;
-        for (Object o : map.entrySet()) {
-            count++;
-        }
-        return count;
+        return map.size();
     }
 
     @Override

@@ -27,7 +27,7 @@ public class Cache implements App.Interface.Cache {
             }
 
             // if map doesn't contain this object then
-            // 1. check if after adding it the size will be to big (if yes -> delet oldest element)
+            // 1. check if after adding it the size will be too big (if yes -> delete oldest element)
             // 2. add new element to Cache
             else {
                 if ((map.size() + 1) > size) deleteOldestElement();
@@ -52,7 +52,7 @@ public class Cache implements App.Interface.Cache {
 
     @Override
     public CacheView getView() {
-        return new App.Main2Map.CacheView(size, map);
+        return new App.Main2Map.CacheView(map);
     }
 
 }
